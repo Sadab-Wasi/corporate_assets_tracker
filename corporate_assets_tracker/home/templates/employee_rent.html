@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block start %}
+<div class="text-center">
+  <h1>Rent Equipment</h1>
+
+  <form method="post" class="container shadow-lg py-4 col-5">
+    {% csrf_token %} 
+    {% if equipments %}
+    <div class="mb-3">
+      <label for="selectEquipment" class="form-label">Available equipments: </label>
+
+      <select class="form-select" size="3" aria-label="size 5 select" id="selectEquipment" name="equipment_id" required>
+        {% for equipment in equipments %}
+        <option value="{{equipment.id}}">{{equipment.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <a href="/company_info/{{company.id}}/employee/{{employee.id}}"><button type="button" class="btn btn-secondary">Back</button></a>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+    {% else %} 
+    <label for="selectEquipment" class="form-label">Available equipments: </label>
+    <a href="/company_info/{{company.id}}/employee/{{employee.id}}"><button type="button" class="btn btn-secondary">Back</button></a>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block start %}
+<div class="text-center">
+  <h1>Update Equipment</h1>
+
+  <form method="post" class="container shadow-lg py-4 col-5">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="inputName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="inputName" name="name" placeholder="Employee name" value="{{equipment.name}}" required />
+    </div>
+    <div class="mb-3">
+      <label for="inputLocaion" class="form-label">Condition</label>
+      
+      <div class="input-group mb-3">
+        <input type="number" class="form-control" id="inputEmail" name="condition" placeholder="Equipment condition" min="0" value="{{equipment.condition}}" step=".01" required />
+        <span class="input-group-text" id="basic-addon2">%</span>
+      </div>
+    </div>
+    <div>
+      <a href="/company_info/{{company.id}}/equipment/"><button type="button" class="btn btn-secondary">Back</button></a>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block start %}
+<div class="text-center">
+  <h1>{{company.name}}</h1>
+
+  <h3 class="col-12 py-2">Go to</h3>
+  <div class="container shadow-lg col-5 pt-4 d-flex justify-content-evenly">
+    <a href="/">
+      <button type="button" class="btn btn-dark btn-lg mb-4">Back</button>
+    </a>
+    <a href="/company_info/{{company.id}}/employee/">
+      <button type="button" class="btn btn-primary btn-lg mb-4">Employees</button>
+    </a>
+    <a href="/company_info/{{company.id}}/equipment/">
+      <button type="button" class="btn btn-primary btn-lg mb-4">Equipments</button>
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% block start %}
+<div class="text-center">
+  <h1>Equipments</h1>
+
+  <a href="/company_info/{{company.id}}">
+    <button type="button" class="btn btn-dark btn-sm mb-4">Back</button>
+  </a>
+  <button type="button" class="btn btn-primary btn-sm mb-4" data-bs-toggle="modal" data-bs-target="#createModal">Create New</button>
+
+  <table class="table table-bordered container shadow-lg">
+    <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Condition</th>
+        <th scope="col">access</th>
+        <th scope="col">info</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if equipments %} {% for equipment in equipments %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{equipment.name}}</td>
+        <td>{{equipment.condition}} %</td>
+        <td>
+          {% if equipment.employee_id %}
+          <button type="button" class="btn btn-info btn-sm" disabled>In Use</button>
+          {% else %}
+          <a href="/company_info/{{company.id}}/equipment/{{equipment.id}}/assign/">
+            <button type="button" class="btn btn-info btn-sm">Assign</button>
+          </a>
+          {% endif %}
+        </td>
+        <td class="d-flex justify-content-evenly">
+          <a href="/company_info/{{company.id}}/update_equipment/{{equipment.id}}"><i class="bi bi-pencil-square text-primary"></i></a>
+          <a href="/company_info/{{company.id}}/delete_equipment/{{equipment.id}}"><i class="bi bi-trash3-fill text-danger"></i></a>
+        </td>
+      </tr>
+      {% endfor %} {% else %}
+      <tr>
+        <td colspan="14">No data</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Create new Equipment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="inputName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="inputName" name="name" placeholder="Equipment name" required />
+          </div>
+          <div class="mb-3">
+            <label for="inputLocaion" class="form-label">Condition</label>
+
+            <div class="input-group mb-3">
+              <input type="number" class="form-control" id="inputEmail" name="condition" placeholder="Equipment condition" min="0" value="0.00" step=".01" required />
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+          <div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

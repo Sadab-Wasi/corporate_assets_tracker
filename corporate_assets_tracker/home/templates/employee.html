@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block start %}
+<div class="text-center">
+  <h1>Employees</h1>
+
+  <a href="/company_info/{{company.id}}">
+    <button type="button" class="btn btn-dark btn-sm mb-4">Back</button>
+  </a>
+  <button type="button" class="btn btn-primary btn-sm mb-4" data-bs-toggle="modal" data-bs-target="#createModal">Create New</button>
+
+  <table class="table table-bordered container shadow-lg">
+    <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">access</th>
+        <th scope="col">info</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if employees %} {% for employee in employees %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{employee.name}}</td>
+        <td>{{employee.email}}</td>
+        <td>
+          <a href="/company_info/{{company.id}}/employee/{{employee.id}}">
+            <button type="button" class="btn btn-info btn-sm">Enter</button>
+          </a>
+        </td>
+        <td class="d-flex justify-content-evenly">
+          <a href="/company_info/{{company.id}}/update_employee/{{employee.id}}"><i class="bi bi-pencil-square text-primary"></i></a>
+          <a href="/company_info/{{company.id}}/delete_employee/{{employee.id}}"><i class="bi bi-trash3-fill text-danger"></i></a>
+        </td>
+      </tr>
+      {% endfor %} {% else %}
+      <tr>
+        <td colspan="14">No data</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Create new Employee</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="inputName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="inputName" name="name" placeholder="Employee name" required />
+          </div>
+          <div class="mb-3">
+            <label for="inputLocaion" class="form-label">Email</label>
+            <input type="text" class="form-control" id="inputEmail" name="email" placeholder="Employee email" required />
+          </div>
+          <div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
